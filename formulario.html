@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Biblioteca Digital - Registro de Préstamos</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(to bottom, #f8fafc, #f1f5f9);
+      color: #334155;
+      line-height: 1.5;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .formulario-contenedor {
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+
+    .formulario-centrado {
+      text-align: center;
+    }
+
+    .formulario-margen-abajo-2 {
+      margin-bottom: 0.5rem;
+    }
+
+    .formulario-margen-abajo-4 {
+      margin-bottom: 1rem;
+    }
+
+    .formulario-margen-abajo-6 {
+      margin-bottom: 1.5rem;
+    }
+
+    .formulario-margen-arriba-4 {
+      margin-top: 1rem;
+    }
+
+    .formulario-margen-arriba-8 {
+      margin-top: 2rem;
+    }
+
+    .formulario-flex {
+      display: flex;
+    }
+
+    .formulario-items-centro {
+      align-items: center;
+    }
+
+    .formulario-justificar-centro {
+      justify-content: center;
+    }
+
+    .formulario-justificar-entre {
+      justify-content: space-between;
+    }
+
+    .formulario-espacio-x-2 > * + * {
+      margin-left: 0.5rem;
+    }
+
+    .formulario-ancho-completo {
+      width: 100%;
+    }
+
+    .formulario-margen-auto {
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .formulario-redondeado-md {
+      border-radius: 0.375rem;
+    }
+
+    .formulario-redondeado-lg {
+      border-radius: 0.5rem;
+    }
+
+    .formulario-fondo-blanco {
+      background-color: #ffffff;
+    }
+
+    .formulario-fondo-oscuro {
+      background-color: #0f172a;
+    }
+
+    .formulario-fondo-ambar {
+      background-color: #f59e0b;
+    }
+
+    .formulario-fondo-verde-claro {
+      background-color: #f0fdf4;
+    }
+
+    .formulario-fondo-azul-claro {
+      background-color: #eff6ff;
+    }
+
+    .formulario-texto-blanco {
+      color: #ffffff;
+    }
+
+    .formulario-texto-gris {
+      color: #94a3b8;
+    }
+
+    .formulario-texto-gris-oscuro {
+      color: #475569;
+    }
+
+    .formulario-texto-ambar {
+      color: #f59e0b;
+    }
+
+    .formulario-texto-verde {
+      color: #15803d;
+    }
+
+    .formulario-texto-azul {
+      color: #3b82f6;
+    }
+
+    .formulario-texto-pequeno {
+      font-size: 0.875rem;
+    }
+
+    .formulario-texto-grande {
+      font-size: 1.25rem;
+    }
+
+    .formulario-texto-xl {
+      font-size: 1.5rem;
+    }
+
+    .formulario-texto-medio {
+      font-weight: 500;
+    }
+
+    .formulario-texto-negrita {
+      font-weight: 700;
+    }
+
+    .formulario-relleno-4 {
+      padding: 1rem;
+    }
+
+    .formulario-relleno-6 {
+      padding: 1.5rem;
+    }
+
+    .formulario-relleno-8 {
+      padding: 2rem;
+    }
+
+    .formulario-relleno-y-4 {
+      padding-top: 1rem;
+      padding-bottom: 1rem;
+    }
+
+    .formulario-relleno-y-10 {
+      padding-top: 2.5rem;
+      padding-bottom: 2.5rem;
+    }
+
+    .formulario-sombra {
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    }
+
+    .formulario-oculto {
+      display: none !important;
+    }
+
+    .formulario-boton {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 0.375rem;
+      padding: 0.75rem 1rem;
+      font-weight: 500;
+      transition: all 0.2s ease;
+      cursor: pointer;
+      border: none;
+    }
+
+    .formulario-boton-primario {
+      background-color: #f59e0b;
+      color: white;
+    }
+
+    .formulario-boton-primario:hover {
+      background-color: #d97706;
+    }
+
+    .formulario-boton-primario:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .formulario-boton-secundario {
+      background-color: #3b82f6;
+      color: white;
+    }
+
+    .formulario-boton-secundario:hover {
+      background-color: #2563eb;
+    }
+
+    .formulario-boton-secundario:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .formulario-entrada {
+      width: 100%;
+      border-radius: 0.375rem;
+      border: 1px solid #e2e8f0;
+      padding: 0.75rem;
+      font-size: 0.875rem;
+      line-height: 1.25rem;
+      transition: all 0.2s ease;
+    }
+
+    .formulario-entrada:focus {
+      outline: none;
+      border-color: #f59e0b;
+      box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.2);
+    }
+
+    .formulario-selector {
+      width: 100%;
+      border-radius: 0.375rem;
+      border: 1px solid #e2e8f0;
+      padding: 0.75rem;
+      font-size: 0.875rem;
+      line-height: 1.25rem;
+      transition: all 0.2s ease;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+      background-position: right 0.5rem center;
+      background-repeat: no-repeat;
+      background-size: 1.5em 1.5em;
+    }
+
+    .formulario-selector:focus {
+      outline: none;
+      border-color: #f59e0b;
+      box-shadow: 0 0 0 2px rgba(245, 158, 11, 0.2);
+    }
+
+    .formulario-selector-azul:focus {
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+    }
+
+    .formulario-seccion {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      padding: 2rem 1rem;
+    }
+
+    .formulario-caja {
+      width: 100%;
+      max-width: 32rem;
+      margin: 0 auto;
+      background-color: white;
+      padding: 2rem;
+      border-radius: 0.75rem;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    }
+
+    .formulario-mini-caja {
+      width: 100%;
+      max-width: 32rem;
+      margin: 2rem auto 0;
+      background-color: white;
+      padding: 1.5rem;
+      border-radius: 0.75rem;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    }
+
+    .formulario-encabezado {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 2rem;
+    }
+
+    .formulario-mini-encabezado {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+    }
+
+    .formulario-grupo {
+      margin-bottom: 1rem;
+    }
+
+    .formulario-etiqueta {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+
+    .formulario-notificacion {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.75rem;
+      border-radius: 0.375rem;
+      margin-top: 1rem;
+      background-color: #f0fdf4;
+      color: #15803d;
+      animation: formulario-aparecer 0.3s ease-in-out;
+    }
+
+    .formulario-notificacion-azul {
+      background-color: #eff6ff;
+      color: #1e40af;
+    }
+
+    @keyframes formulario-aparecer {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .formulario-pie {
+      background-color: #0f172a;
+      color: white;
+      padding: 1.5rem 1rem;
+      margin-top: auto;
+    }
+
+    .formulario-icono {
+      display: inline-block;
+      width: 1.5rem;
+      height: 1.5rem;
+      stroke-width: 0;
+      stroke: currentColor;
+      fill: currentColor;
+      vertical-align: middle;
+    }
+
+    .formulario-icono-pequeno {
+      width: 1rem;
+      height: 1rem;
+    }
+
+    .formulario-icono-grande {
+      width: 2rem;
+      height: 2rem;
+    }
+
+    .formulario-margen-derecha-2 {
+      margin-right: 0.5rem;
+    }
+
+    .formulario-separador {
+      height: 1px;
+      background-color: #e2e8f0;
+      margin: 1.5rem 0;
+    }
+  </style>
+</head>
+<body>
+  <section class="formulario-seccion">
+    <div class="formulario-contenedor">
+      <!-- Formulario de Préstamo -->
+      <div class="formulario-caja">
+        <div class="formulario-encabezado">
+          <svg class="formulario-icono formulario-icono-grande formulario-texto-ambar formulario-margen-derecha-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+          </svg>
+          <h2 class="formulario-texto-xl formulario-texto-negrita">Registrar Préstamo</h2>
+        </div>
+        
+        <form id="formularioPrestamo">
+          <div class="formulario-margen-abajo-6">
+            <div class="formulario-grupo">
+              <label for="nombre" class="formulario-etiqueta">Tu Nombre</label>
+              <input id="nombre" type="text" class="formulario-entrada" placeholder="Escribe tu nombre completo" required>
+            </div>
+            
+            <div class="formulario-grupo">
+              <label for="estanteria" class="formulario-etiqueta">Selecciona una Estantería</label>
+              <select id="estanteria" class="formulario-selector" required>
+                <option value="" disabled selected>Elige una estantería</option>
+                <option value="estanteria-1">Estantería 1: Literatura Clásica</option>
+                <option value="estanteria-2">Estantería 2: Ciencia Ficción</option>
+                <option value="estanteria-3">Estantería 3: Fantasía</option>
+              </select>
+            </div>
+            
+            <div class="formulario-grupo">
+              <label for="libro" class="formulario-etiqueta">Selecciona un Libro</label>
+              <select id="libro" class="formulario-selector" disabled required>
+                <option value="" disabled selected>Primero selecciona una estantería</option>
+              </select>
+            </div>
+          </div>
+          
+          <button type="submit" class="formulario-boton formulario-boton-primario formulario-ancho-completo" id="botonEnviar" disabled>
+            Registrar Préstamo
+          </button>
+          
+          <div id="notificacion" class="formulario-notificacion formulario-oculto">
+            <svg class="formulario-icono formulario-icono-pequeno formulario-margen-derecha-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+              <polyline points="22 4 12 14.01 9 11.01"></polyline>
+            </svg>
+            <span>¡Préstamo registrado con éxito!</span>
+          </div>
+        </form>
+      </div>
+      
+      <!-- Mini Formulario de Devolución -->
+      <div class="formulario-mini-caja">
+        <div class="formulario-mini-encabezado">
+          <svg class="formulario-icono formulario-texto-azul formulario-margen-derecha-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 10 4 15 9 20"></polyline>
+            <path d="M20 4v7a4 4 0 0 1-4 4H4"></path>
+          </svg>
+          <h3 class="formulario-texto-grande formulario-texto-negrita">Registrar Devolución</h3>
+        </div>
+        
+        <form id="formularioDevolucion">
+          <div class="formulario-grupo">
+            <label for="libroDevolucion" class="formulario-etiqueta">Selecciona el Libro a Devolver</label>
+            <select id="libroDevolucion" class="formulario-selector formulario-selector-azul" required>
+              <option value="" disabled selected>Selecciona un libro prestado</option>
+              <!-- Las opciones se cargarán dinámicamente con JavaScript -->
+            </select>
+          </div>
+          
+          <button type="submit" class="formulario-boton formulario-boton-secundario formulario-ancho-completo" id="botonDevolver" disabled>
+            Registrar Devolución
+          </button>
+          
+          <div id="notificacionDevolucion" class="formulario-notificacion formulario-notificacion-azul formulario-oculto">
+            <svg class="formulario-icono formulario-icono-pequeno formulario-margen-derecha-2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+              <polyline points="22 4 12 14.01 9 11.01"></polyline>
+            </svg>
+            <span>¡Devolución registrada con éxito!</span>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <footer class="formulario-pie">
+    <div class="formulario-contenedor">
+      <div class="formulario-flex formulario-items-centro formulario-justificar-centro formulario-texto-pequeno formulario-texto-gris">
+       <a href="https://indifferentminds.org" style="color: white; text-decoration: none;"> Indifferent Minds</a>
+
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Datos de libros por estantería
+    const estanterias = {
+      "estanteria-1": [
+        { id: 101, titulo: "Cien años de soledad", autor: "Gabriel García Márquez", disponible: true },
+        { id: 102, titulo: "Don Quijote de la Mancha", autor: "Miguel de Cervantes", disponible: true },
+        { id: 103, titulo: "La Odisea", autor: "Homero", disponible: false },
+        { id: 104, titulo: "Crimen y castigo", autor: "Fiódor Dostoyevski", disponible: true }
+      ],
+      "estanteria-2": [
+        { id: 201, titulo: "1984", autor: "George Orwell", disponible: true },
+        { id: 202, titulo: "Dune", autor: "Frank Herbert", disponible: true },
+        { id: 203, titulo: "Neuromante", autor: "William Gibson", disponible: true },
+        { id: 204, titulo: "Fundación", autor: "Isaac Asimov", disponible: false }
+      ],
+      "estanteria-3": [
+        { id: 301, titulo: "El Hobbit", autor: "J.R.R. Tolkien", disponible: true },
+        { id: 302, titulo: "Harry Potter y la piedra filosofal", autor: "J.K. Rowling", disponible: false },
+        { id: 303, titulo: "Juego de Tronos", autor: "George R.R. Martin", disponible: true },
+        { id: 304, titulo: "El nombre del viento", autor: "Patrick Rothfuss", disponible: true }
+      ]
+    };
+
+    // Elementos del DOM - Formulario de Préstamo
+    const selectorEstanteria = document.getElementById('estanteria');
+    const selectorLibro = document.getElementById('libro');
+    const campoNombre = document.getElementById('nombre');
+    const botonEnviar = document.getElementById('botonEnviar');
+    const formularioPrestamo = document.getElementById('formularioPrestamo');
+    const notificacion = document.getElementById('notificacion');
+    
+    // Elementos del DOM - Formulario de Devolución
+    const selectorLibroDevolucion = document.getElementById('libroDevolucion');
+    const botonDevolver = document.getElementById('botonDevolver');
+    const formularioDevolucion = document.getElementById('formularioDevolucion');
+    const notificacionDevolucion = document.getElementById('notificacionDevolucion');
+    
+    // Otros elementos
+    const elementoAnioActual = document.getElementById('anioActual');
+
+    // Asegurarse de que las notificaciones estén ocultas al inicio
+    notificacion.classList.add('formulario-oculto');
+    notificacionDevolucion.classList.add('formulario-oculto');
+    
+    // Establecer el año actual en el footer
+    elementoAnioActual.textContent = new Date().getFullYear();
+
+    // Función para cargar los libros prestados en el selector de devolución
+    function cargarLibrosPrestados() {
+      // Limpiar el selector
+      selectorLibroDevolucion.innerHTML = '<option value="" disabled selected>Selecciona un libro prestado</option>';
+      
+      // Contador para verificar si hay libros prestados
+      let hayLibrosPrestados = false;
+      
+      // Recorrer todas las estanterías y buscar libros no disponibles (prestados)
+      for (const estanteriaId in estanterias) {
+        const librosEstanteria = estanterias[estanteriaId];
+        
+        // Filtrar solo los libros no disponibles (prestados)
+        const librosPrestados = librosEstanteria.filter(libro => !libro.disponible);
+        
+        // Si hay libros prestados en esta estantería, añadirlos al selector
+        if (librosPrestados.length > 0) {
+          hayLibrosPrestados = true;
+          
+          // Crear un grupo de opciones para esta estantería
+          const grupoEstanteria = document.createElement('optgroup');
+          grupoEstanteria.label = estanteriaId === "estanteria-1" ? "Literatura Clásica" : 
+                                  estanteriaId === "estanteria-2" ? "Ciencia Ficción" : "Fantasía";
+          
+          // Añadir cada libro prestado como una opción
+          librosPrestados.forEach(libro => {
+            const opcion = document.createElement('option');
+            opcion.value = libro.id;
+            opcion.textContent = `${libro.titulo} - ${libro.autor}`;
+            grupoEstanteria.appendChild(opcion);
+          });
+          
+          // Añadir el grupo de opciones al selector
+          selectorLibroDevolucion.appendChild(grupoEstanteria);
+        }
+      }
+      
+      // Habilitar o deshabilitar el botón según si hay libros prestados
+      botonDevolver.disabled = !hayLibrosPrestados;
+      
+      // Si no hay libros prestados, mostrar un mensaje en el selector
+      if (!hayLibrosPrestados) {
+        const opcionNoHayLibros = document.createElement('option');
+        opcionNoHayLibros.value = "";
+        opcionNoHayLibros.disabled = true;
+        opcionNoHayLibros.selected = true;
+        opcionNoHayLibros.textContent = "No hay libros prestados actualmente";
+        selectorLibroDevolucion.appendChild(opcionNoHayLibros);
+      }
+    }
+
+    // Manejar el cambio de estantería
+    selectorEstanteria.addEventListener('change', function() {
+      const estanteriaSeleccionada = this.value;
+      
+      // Limpiar y resetear el selector de libros
+      selectorLibro.innerHTML = '<option value="" disabled selected>Selecciona un libro</option>';
+      
+      // Habilitar el selector de libros solo si hay una estantería seleccionada
+      if (estanteriaSeleccionada && estanterias[estanteriaSeleccionada]) {
+        selectorLibro.disabled = false;
+        
+        // Cargar los libros de la estantería seleccionada
+        estanterias[estanteriaSeleccionada].forEach(libro => {
+          const opcion = document.createElement('option');
+          opcion.value = libro.id;
+          opcion.textContent = `${libro.titulo} - ${libro.autor}`;
+          
+          // Deshabilitar libros no disponibles
+          if (!libro.disponible) {
+            opcion.disabled = true;
+            opcion.textContent += ' (No disponible)';
+          }
+          
+          selectorLibro.appendChild(opcion);
+        });
+      } else {
+        selectorLibro.disabled = true;
+      }
+      
+      // Verificar si el formulario es válido
+      verificarFormulario();
+    });
+
+    // Verificar validez del formulario cuando cambian los campos
+    selectorLibro.addEventListener('change', verificarFormulario);
+    campoNombre.addEventListener('input', verificarFormulario);
+    selectorLibroDevolucion.addEventListener('change', function() {
+      botonDevolver.disabled = !this.value;
+    });
+
+    // Función para verificar si el formulario de préstamo es válido
+    function verificarFormulario() {
+      const valorNombre = campoNombre.value.trim();
+      const valorLibro = selectorLibro.value;
+      const valorEstanteria = selectorEstanteria.value;
+      
+      // Habilitar el botón solo si todos los campos están completos
+      botonEnviar.disabled = !(valorNombre && valorLibro && valorEstanteria);
+    }
+
+    // Manejar el envío del formulario de préstamo
+    formularioPrestamo.addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      // Obtener los valores del formulario
+      const valorNombre = campoNombre.value.trim();
+      const textoEstanteria = selectorEstanteria.options[selectorEstanteria.selectedIndex].text;
+      const idLibro = parseInt(selectorLibro.value);
+      
+      // Encontrar el libro seleccionado en los datos
+      let libroSeleccionado = null;
+      let estanteriaSeleccionada = null;
+      
+      for (const estanteriaId in estanterias) {
+        const encontrado = estanterias[estanteriaId].find(libro => libro.id === idLibro);
+        if (encontrado) {
+          libroSeleccionado = encontrado;
+          estanteriaSeleccionada = estanteriaId;
+          break;
+        }
+      }
+      
+      // Marcar el libro como no disponible (prestado)
+      if (libroSeleccionado) {
+        libroSeleccionado.disponible = false;
+      }
+      
+      // Registrar el préstamo (aquí se podría enviar a un servidor)
+      console.log('Préstamo registrado:', {
+        nombre: valorNombre,
+        estanteria: textoEstanteria,
+        libro: libroSeleccionado
+      });
+      
+      // Mostrar la notificación de éxito
+      notificacion.classList.remove('formulario-oculto');
+      
+      // Actualizar el selector de libros para devolución
+      cargarLibrosPrestados();
+      
+      // Resetear el formulario después de 3 segundos
+      setTimeout(() => {
+        // Resetear el formulario
+        formularioPrestamo.reset();
+        
+        // Ocultar la notificación
+        notificacion.classList.add('formulario-oculto');
+        
+        // Deshabilitar y resetear el selector de libros
+        selectorLibro.disabled = true;
+        selectorLibro.innerHTML = '<option value="" disabled selected>Primero selecciona una estantería</option>';
+        
+        // Deshabilitar el botón de envío
+        botonEnviar.disabled = true;
+      }, 3000);
+    });
+
+    // Manejar el envío del formulario de devolución
+    formularioDevolucion.addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      // Obtener el ID del libro a devolver
+      const idLibroDevolucion = parseInt(selectorLibroDevolucion.value);
+      
+      // Encontrar el libro en los datos
+      let libroDevuelto = null;
+      let estanteriaLibro = null;
+      
+      for (const estanteriaId in estanterias) {
+        const encontrado = estanterias[estanteriaId].find(libro => libro.id === idLibroDevolucion);
+        if (encontrado) {
+          libroDevuelto = encontrado;
+          estanteriaLibro = estanteriaId;
+          break;
+        }
+      }
+      
+      // Marcar el libro como disponible (devuelto)
+      if (libroDevuelto) {
+        libroDevuelto.disponible = true;
+      }
+      
+      // Registrar la devolución (aquí se podría enviar a un servidor)
+      console.log('Devolución registrada:', {
+        libro: libroDevuelto,
+        estanteria: estanteriaLibro
+      });
+      
+      // Mostrar la notificación de éxito
+      notificacionDevolucion.classList.remove('formulario-oculto');
+      
+      // Actualizar los selectores de libros
+      cargarLibrosPrestados();
+      
+      // Si hay una estantería seleccionada en el formulario de préstamo, actualizar su lista de libros
+      if (selectorEstanteria.value) {
+        const evento = new Event('change');
+        selectorEstanteria.dispatchEvent(evento);
+      }
+      
+      // Resetear el formulario después de 3 segundos
+      setTimeout(() => {
+        // Ocultar la notificación
+        notificacionDevolucion.classList.add('formulario-oculto');
+      }, 3000);
+    });
+
+    // Inicializar la página
+    window.addEventListener('DOMContentLoaded', function() {
+      // Cargar los libros prestados en el selector de devolución
+      cargarLibrosPrestados();
+    });
+  </script>
+</body>
+</html>
